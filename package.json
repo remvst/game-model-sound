@@ -1,0 +1,22 @@
+{
+  "name": "@remvst/game-model-sound",
+  "version": "4.10.1",
+  "description": "Sound system for @remvst/game-model",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "prepublishOnly": "npm i && npm run build"
+  },
+  "author": "Rémi Vansteelandt",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remvst/game-model": "^4.10.1",
+    "@remvst/optimization": "^1.0.1",
+    "@remvst/random": "^2.0.1",
+    "@types/howler": "^2.2.7",
+    "howler": "^2.2.3",
+    "rxjs": "^7.8.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {}
+}
