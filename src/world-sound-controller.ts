@@ -13,7 +13,7 @@ export class WorldSoundController {
     private soundEffectControllers: SoundEffectController<any>[] = [];
     private readonly collapsableControllers = new Map<string, SoundEffectController<any>>();
 
-    private soundEffectsEnabled = true;
+    private started = false;
 
     age: number = 0;
 
@@ -47,6 +47,10 @@ export class WorldSoundController {
     }
 
     start() {
+        if (this.started) return;
+
+        this.started = true;
+
         this.stop();
 
         this.subscriptions = [
@@ -55,6 +59,8 @@ export class WorldSoundController {
     }
 
     stop() {
+        this.started = false;
+
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }
@@ -84,10 +90,6 @@ export class WorldSoundController {
     }
 
     private onEvent(event: WorldEvent) {
-        if (!this.soundEffectsEnabled) {
-            return;
-        }
-
         const soundEffectControllers = this.soundEffectControllerFactory.controllersForEvent(event, this.world);
         for (const controller of soundEffectControllers) {
             this.addSoundEffectController(controller);
