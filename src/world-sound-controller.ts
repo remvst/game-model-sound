@@ -52,9 +52,9 @@ export class WorldSoundController {
     start() {
         if (this.started) return;
 
-        this.started = true;
-
         this.stop();
+
+        this.started = true;
 
         this.subscriptions = [
             this.world.events.subscribe((event) => this.onEvent(event)),
