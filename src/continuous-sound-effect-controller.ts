@@ -1,9 +1,10 @@
-import { Howl } from 'howler';
-import { WorldEvent } from '@remvst/game-model';
-import { SimpleSoundEffectController } from './simple-sound-effect-controller';
+import { WorldEvent } from "@remvst/game-model";
+import { Howl } from "howler";
+import { SimpleSoundEffectController } from "./simple-sound-effect-controller";
 
-export class ContinuousSoundEffectController<EventType extends WorldEvent> extends SimpleSoundEffectController<EventType> {
-
+export class ContinuousSoundEffectController<
+    EventType extends WorldEvent,
+> extends SimpleSoundEffectController<EventType> {
     constructor(
         howls: Howl[],
         refRelativeDistance: number = 1,

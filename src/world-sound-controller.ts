@@ -1,17 +1,19 @@
-import { World, WorldEvent } from '@remvst/game-model';
-import { SoundEffectController } from './sound-effect-controller';
-import { SoundEffectControllerFactory } from './sound-effect-controller-factory';
-import { Subscription } from 'rxjs';
+import { World, WorldEvent } from "@remvst/game-model";
+import { Subscription } from "rxjs";
+import { SoundEffectController } from "./sound-effect-controller";
+import { SoundEffectControllerFactory } from "./sound-effect-controller-factory";
 
 export class WorldSoundController {
-
     readonly world: World;
     private subscriptions: Subscription[] = [];
 
     private readonly soundEffectControllerFactory: SoundEffectControllerFactory;
 
     private soundEffectControllers: SoundEffectController<any>[] = [];
-    private readonly collapsableControllers = new Map<string, SoundEffectController<any>>();
+    private readonly collapsableControllers = new Map<
+        string,
+        SoundEffectController<any>
+    >();
 
     private started = false;
 
@@ -21,11 +23,12 @@ export class WorldSoundController {
     rate: number = 1;
 
     constructor(options: {
-        world: World,
-        soundEffectControllerFactory: SoundEffectControllerFactory,
+        world: World;
+        soundEffectControllerFactory: SoundEffectControllerFactory;
     }) {
         this.world = options.world;
-        this.soundEffectControllerFactory = options.soundEffectControllerFactory;
+        this.soundEffectControllerFactory =
+            options.soundEffectControllerFactory;
     }
 
     setVolume(volume: number) {
@@ -69,15 +72,22 @@ export class WorldSoundController {
         for (const controller of this.soundEffectControllers.slice(0)) {
             controller.tearDown();
         }
-        this.soundEffectControllers.splice(0, this.soundEffectControllers.length);
+        this.soundEffectControllers.splice(
+            0,
+            this.soundEffectControllers.length,
+        );
     }
 
     update(elapsed: number) {
         this.age += elapsed;
-        this.soundEffectControllers.forEach((controller) => controller.update());
+        this.soundEffectControllers.forEach((controller) =>
+            controller.update(),
+        );
     }
 
-    private removeSoundEffectController(controller: SoundEffectController<any>) {
+    private removeSoundEffectController(
+        controller: SoundEffectController<any>,
+    ) {
         controller.tearDown();
 
         const index = this.soundEffectControllers.indexOf(controller);
@@ -90,7 +100,11 @@ export class WorldSoundController {
     }
 
     private onEvent(event: WorldEvent) {
-        const soundEffectControllers = this.soundEffectControllerFactory.controllersForEvent(event, this.world);
+        const soundEffectControllers =
+            this.soundEffectControllerFactory.controllersForEvent(
+                event,
+                this.world,
+            );
         for (const controller of soundEffectControllers) {
             this.addSoundEffectController(controller);
         }
@@ -120,10 +134,14 @@ export class WorldSoundController {
     }
 
     pause() {
-        this.soundEffectControllers.slice(0).forEach(controller => controller.pause());
+        this.soundEffectControllers
+            .slice(0)
+            .forEach((controller) => controller.pause());
     }
 
     resume() {
-        this.soundEffectControllers.slice(0).forEach(controller => controller.resume());
+        this.soundEffectControllers
+            .slice(0)
+            .forEach((controller) => controller.resume());
     }
 }

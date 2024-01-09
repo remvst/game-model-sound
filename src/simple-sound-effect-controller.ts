@@ -1,10 +1,15 @@
-import { randPick } from '@remvst/random';
-import { Howl } from 'howler';
-import { SmoothTargetFollowingTrait, WorldEvent, pointDistance } from '@remvst/game-model';
+import {
+    SmoothTargetFollowingTrait,
+    WorldEvent,
+    pointDistance,
+} from "@remvst/game-model";
+import { randPick } from "@remvst/random";
+import { Howl } from "howler";
 import { SoundEffectController } from "./sound-effect-controller";
 
-export class SimpleSoundEffectController<EventType extends WorldEvent> extends SoundEffectController<EventType> {
-
+export class SimpleSoundEffectController<
+    EventType extends WorldEvent,
+> extends SoundEffectController<EventType> {
     private howlId: number;
     private howl: Howl;
 
@@ -39,24 +44,36 @@ export class SimpleSoundEffectController<EventType extends WorldEvent> extends S
         this.howl.volume(this.volume);
         this.howl.rate(this.rate);
         this.howlId = this.howl.play();
-        this.howl.once('end', () => this.onHowlEnd(), this.howlId);
+        this.howl.once("end", () => this.onHowlEnd(), this.howlId);
 
-        const halfDiagonal = pointDistance(0, 0, this.camera.width, this.camera.height) / 2;
+        const halfDiagonal =
+            pointDistance(0, 0, this.camera.width, this.camera.height) / 2;
 
         if (this.position) {
-            const smoothTargetFollowingTrait = this.camera.entity!.traitOfType(SmoothTargetFollowingTrait);
+            const smoothTargetFollowingTrait = this.camera.entity!.traitOfType(
+                SmoothTargetFollowingTrait,
+            );
 
-            const { target } = this.camera.entity!.traitOfType(SmoothTargetFollowingTrait);
+            const { target } = this.camera.entity!.traitOfType(
+                SmoothTargetFollowingTrait,
+            );
             const x = this.position.x - (target || this.camera.entity).x;
             const y = this.position.y - (target || this.camera.entity).y;
-            if (Math.abs(x) > this.minDistanceToPosition || Math.abs(y) > this.minDistanceToPosition) {
+            if (
+                Math.abs(x) > this.minDistanceToPosition ||
+                Math.abs(y) > this.minDistanceToPosition
+            ) {
                 this.howl.pos(x, y, 0, this.howlId);
-                this.howl.pannerAttr({
-                    panningModel: 'HRTF',
-                    refDistance: halfDiagonal * 0.5 * this.refRelativeDistance,
-                    rolloffFactor: 100,
-                    distanceModel: 'linear'
-                }, this.howlId);
+                this.howl.pannerAttr(
+                    {
+                        panningModel: "HRTF",
+                        refDistance:
+                            halfDiagonal * 0.5 * this.refRelativeDistance,
+                        rolloffFactor: 100,
+                        distanceModel: "linear",
+                    },
+                    this.howlId,
+                );
             }
         }
     }
@@ -68,7 +85,9 @@ export class SimpleSoundEffectController<EventType extends WorldEvent> extends S
         const { howl, howlId } = this;
         if (!howl || !howlId) return;
 
-        const smoothTargetFollowingTrait = this.camera.entity?.traitOfType(SmoothTargetFollowingTrait);
+        const smoothTargetFollowingTrait = this.camera.entity?.traitOfType(
+            SmoothTargetFollowingTrait,
+        );
         if (!smoothTargetFollowingTrait) return;
 
         const { target } = smoothTargetFollowingTrait;
@@ -77,16 +96,24 @@ export class SimpleSoundEffectController<EventType extends WorldEvent> extends S
         const x = position.x - (target || this.camera.entity).x;
         const y = position.y - (target || this.camera.entity).y;
 
-        if (Math.abs(x) < this.minDistanceToPosition || Math.abs(y) < this.minDistanceToPosition) return;
+        if (
+            Math.abs(x) < this.minDistanceToPosition ||
+            Math.abs(y) < this.minDistanceToPosition
+        )
+            return;
 
-        const halfDiagonal = pointDistance(0, 0, this.camera.width, this.camera.height) / 2;
+        const halfDiagonal =
+            pointDistance(0, 0, this.camera.width, this.camera.height) / 2;
         howl.pos(x, y, 0, howlId);
-        howl.pannerAttr({
-            panningModel: 'HRTF',
-            refDistance: halfDiagonal * 0.5 * this.refRelativeDistance,
-            rolloffFactor: 100,
-            distanceModel: 'linear'
-        }, howlId);
+        howl.pannerAttr(
+            {
+                panningModel: "HRTF",
+                refDistance: halfDiagonal * 0.5 * this.refRelativeDistance,
+                rolloffFactor: 100,
+                distanceModel: "linear",
+            },
+            howlId,
+        );
     }
 
     tearDown(): void {

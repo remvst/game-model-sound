@@ -1,9 +1,10 @@
-import { CameraTrait, Vector2, WorldEvent } from '@remvst/game-model';
-import { ReusablePool, ReusablePoolBindable } from '@remvst/optimization';
-import { WorldSoundController } from './world-sound-controller';
+import { CameraTrait, Vector2, WorldEvent } from "@remvst/game-model";
+import { ReusablePool, ReusablePoolBindable } from "@remvst/optimization";
+import { WorldSoundController } from "./world-sound-controller";
 
-export class SoundEffectController<EventType extends WorldEvent> implements ReusablePoolBindable {
-
+export class SoundEffectController<EventType extends WorldEvent>
+    implements ReusablePoolBindable
+{
     protected worldSoundController: WorldSoundController;
     protected event: EventType;
     protected position: Vector2 | null;
@@ -17,27 +18,24 @@ export class SoundEffectController<EventType extends WorldEvent> implements Reus
     private worldSoundControllerAgeAtCreation: number = 0;
     protected removeCallback: () => void;
 
-    bind(
-        worldSoundController: WorldSoundController,
-        event: EventType,
-    ) {
+    bind(worldSoundController: WorldSoundController, event: EventType) {
         this.worldSoundController = worldSoundController;
         this.event = event;
 
         this.worldSoundControllerAgeAtCreation = worldSoundController.age;
     }
 
-    postBind() {
-
-    }
+    postBind() {}
 
     protected get camera(): CameraTrait {
         if (!this.cachedCamera) {
-            for (const camera of this.worldSoundController.world.entities.bucket(CameraTrait.key)) {
+            for (const camera of this.worldSoundController.world.entities.bucket(
+                CameraTrait.key,
+            )) {
                 this.cachedCamera = camera.traitOfType(CameraTrait);
                 return this.cachedCamera;
             }
-            throw new Error('No camera found');
+            throw new Error("No camera found");
         }
         return this.cachedCamera;
     }
@@ -72,21 +70,13 @@ export class SoundEffectController<EventType extends WorldEvent> implements Reus
         // TODO update position
     }
 
-    pause() {
+    pause() {}
 
-    }
+    resume() {}
 
-    resume() {
+    setVolume(volume: number) {}
 
-    }
-
-    setVolume(volume: number) {
-
-    }
-
-    setRate(rate: number) {
-
-    }
+    setRate(rate: number) {}
 
     async removeEmitter(): Promise<void> {
         return new Promise((resolve) => {
@@ -95,6 +85,9 @@ export class SoundEffectController<EventType extends WorldEvent> implements Reus
     }
 
     protected get age(): number {
-        return this.worldSoundController.age - this.worldSoundControllerAgeAtCreation;
+        return (
+            this.worldSoundController.age -
+            this.worldSoundControllerAgeAtCreation
+        );
     }
 }
