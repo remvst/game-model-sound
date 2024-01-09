@@ -2,8 +2,7 @@ name: Check tests
 on:
     push:
         branches:
-            - master
-    workflow_dispatch:
+            - main
 jobs:
     check:
         runs-on: ubuntu-latest
