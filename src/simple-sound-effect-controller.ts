@@ -7,9 +7,15 @@ import { randPick } from "@remvst/random";
 import { Howl } from "howler";
 import { SoundEffectController } from "./sound-effect-controller";
 
+export type HowlAndSprite = [Howl, string | undefined];
+export type HowlOrHowlAndSprite = Howl | HowlAndSprite;
+
 export class SimpleSoundEffectController<
     EventType extends WorldEvent,
 > extends SoundEffectController<EventType> {
+
+    private howlsAndSprites: HowlAndSprite[] = [];
+
     private howlId: number;
     private howl: Howl;
 
@@ -19,10 +25,18 @@ export class SimpleSoundEffectController<
     minDistanceToPosition = 0;
 
     constructor(
-        private readonly howls: Howl[],
+        howlsAndSprites: HowlOrHowlAndSprite[],
         private readonly refRelativeDistance: number = 1,
     ) {
         super();
+
+        for (const sound of howlsAndSprites) {
+            if (sound instanceof Howl) {
+                this.howlsAndSprites.push([sound, undefined]);
+            } else {
+                this.howlsAndSprites.push(sound);
+            }
+        }
     }
 
     setVolume(volume: number): void {
@@ -40,20 +54,20 @@ export class SimpleSoundEffectController<
     }
 
     postBind(): void {
-        this.howl = randPick(this.howls);
+        const [howl, sprite] = randPick(this.howlsAndSprites);
+
+        this.howl = howl;
         this.howl.volume(this.volume);
         this.howl.rate(this.rate);
-        this.howlId = this.howl.play();
+
+        this.howlId = this.howl.play(sprite);
+
         this.howl.once("end", () => this.onHowlEnd(), this.howlId);
 
         const halfDiagonal =
             pointDistance(0, 0, this.camera.width, this.camera.height) / 2;
 
         if (this.position) {
-            const smoothTargetFollowingTrait = this.camera.entity!.traitOfType(
-                SmoothTargetFollowingTrait,
-            );
-
             const { target } = this.camera.entity!.traitOfType(
                 SmoothTargetFollowingTrait,
             );

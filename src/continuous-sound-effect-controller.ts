@@ -1,16 +1,18 @@
 import { WorldEvent } from "@remvst/game-model";
-import { Howl } from "howler";
-import { SimpleSoundEffectController } from "./simple-sound-effect-controller";
+import {
+    HowlOrHowlAndSprite,
+    SimpleSoundEffectController,
+} from "./simple-sound-effect-controller";
 
 export class ContinuousSoundEffectController<
     EventType extends WorldEvent,
 > extends SimpleSoundEffectController<EventType> {
     constructor(
-        howls: Howl[],
+        howlsAndSprites: HowlOrHowlAndSprite[],
         refRelativeDistance: number = 1,
         private readonly keepPlaying: () => boolean,
     ) {
-        super(howls, refRelativeDistance);
+        super(howlsAndSprites, refRelativeDistance);
     }
 
     update() {
