@@ -60,7 +60,7 @@ export class SimpleSoundEffectController<
         this.howl.volume(this.volume);
         this.howl.rate(this.rate);
 
-        this.howlId = this.howl.play(sprite);
+        this.howlId = this.howl.play(sprite || undefined);
 
         this.howl.once("end", () => this.onHowlEnd(), this.howlId);
 

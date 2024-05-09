@@ -1,6 +1,6 @@
 {
     "name": "@remvst/game-model-sound",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Sound system for @remvst/game-model",
     "main": "lib/index.js",
     "scripts": {
