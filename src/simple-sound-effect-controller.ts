@@ -13,7 +13,6 @@ export type HowlOrHowlAndSprite = Howl | HowlAndSprite;
 export class SimpleSoundEffectController<
     EventType extends WorldEvent,
 > extends SoundEffectController<EventType> {
-
     private howlsAndSprites: HowlAndSprite[] = [];
 
     private howlId: number;
