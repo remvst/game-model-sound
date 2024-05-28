@@ -110,7 +110,7 @@ export class WorldSoundController {
         }
     }
 
-    private addSoundEffectController(controller: SoundEffectController<any>) {
+    addSoundEffectController(controller: SoundEffectController<any>) {
         const { collapseGroup, collapseToNewest } = controller;
         if (collapseGroup) {
             const existing = this.collapsableControllers.get(collapseGroup);
