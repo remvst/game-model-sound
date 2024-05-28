@@ -74,6 +74,7 @@ export class SoundEffectController<EventType extends WorldEvent>
 
     resume() {}
 
+    setMasterVolume(masterVolume: number) {}
     setVolume(volume: number) {}
 
     setRate(rate: number) {}

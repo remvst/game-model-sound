@@ -34,7 +34,7 @@ export class WorldSoundController {
     setVolume(volume: number) {
         this.volume = volume;
         for (const controller of this.soundEffectControllers) {
-            controller.setVolume(volume);
+            controller.setMasterVolume(volume);
         }
     }
 
@@ -121,7 +121,7 @@ export class WorldSoundController {
             this.collapsableControllers.set(collapseGroup, controller);
         }
 
-        controller.setVolume(this.volume);
+        controller.setMasterVolume(this.volume);
         controller.setRate(this.rate);
         controller.bind(this, event);
         controller.postBind();

@@ -19,6 +19,7 @@ export class SimpleSoundEffectController<
     private howl: Howl;
 
     private volume = 1;
+    private masterVolume = 1;
     private rate = 1;
 
     minDistanceToPosition = 0;
@@ -41,14 +42,21 @@ export class SimpleSoundEffectController<
     setVolume(volume: number): void {
         this.volume = volume;
         if (this.howl) {
-            this.howl.volume(this.volume);
+            this.howl.volume(this.volume * this.masterVolume, this.howlId);
+        }
+    }
+
+    setMasterVolume(volume: number): void {
+        this.masterVolume = volume;
+        if (this.howl) {
+            this.howl.volume(this.volume * this.masterVolume, this.howlId);
         }
     }
 
     setRate(rate: number): void {
         this.rate = rate;
         if (this.howl) {
-            this.howl.rate(this.rate);
+            this.howl.rate(this.rate, this.howlId);
         }
     }
 
@@ -56,7 +64,7 @@ export class SimpleSoundEffectController<
         const [howl, sprite] = randPick(this.howlsAndSprites);
 
         this.howl = howl;
-        this.howl.volume(this.volume);
+        this.howl.volume(this.volume * this.masterVolume);
         this.howl.rate(this.rate);
 
         this.howlId = this.howl.play(sprite || undefined);
