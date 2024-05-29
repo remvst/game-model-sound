@@ -12,6 +12,11 @@ export class AmbientSoundEffectController extends SimpleSoundEffectController<nu
         super(howlsAndSprites, refRelativeDistance);
     }
 
+    postBind(): void {
+        super.postBind();
+        this.howl.loop(true, this.howlId);
+    }
+
     update() {
         super.update();
 
@@ -20,5 +25,9 @@ export class AmbientSoundEffectController extends SimpleSoundEffectController<nu
         } else {
             this.resume();
         }
+    }
+
+    protected onHowlEnd(): void {
+        // no-op
     }
 }

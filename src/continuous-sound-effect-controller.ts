@@ -15,11 +15,20 @@ export class ContinuousSoundEffectController<
         super(howlsAndSprites, refRelativeDistance);
     }
 
+    postBind(): void {
+        super.postBind();
+        this.howl.loop(true, this.howlId);
+    }
+
     update() {
         super.update();
 
         if (!this.keepPlaying()) {
             this.removeCallback?.();
         }
+    }
+
+    protected onHowlEnd(): void {
+        // no-op
     }
 }
