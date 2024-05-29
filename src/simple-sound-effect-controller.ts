@@ -3,7 +3,6 @@ import {
     WorldEvent,
     pointDistance,
 } from "@remvst/game-model";
-import { randPick } from "@remvst/random";
 import { Howl } from "howler";
 import { SoundEffectController } from "./sound-effect-controller";
 
@@ -63,7 +62,7 @@ export class SimpleSoundEffectController<
     }
 
     postBind(): void {
-        const [howl, sprite] = randPick(this.howlsAndSprites);
+        const [howl, sprite] = this.howlsAndSprites[Math.floor(Math.random() * this.howlsAndSprites.length)];
 
         this.howl = howl;
         this.howl.volume(this.volume * this.masterVolume);

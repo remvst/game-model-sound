@@ -1,6 +1,6 @@
 {
     "name": "@remvst/game-model-sound",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "description": "Sound system for @remvst/game-model",
     "main": "lib/index.js",
     "scripts": {
@@ -14,7 +14,6 @@
     "license": "UNLICENSED",
     "dependencies": {
         "@remvst/optimization": "^1.0.1",
-        "@remvst/random": "^2.0.1",
         "rxjs": "^7.8.0"
     },
     "peerDependencies": {
@@ -22,7 +21,7 @@
         "howler": "^2.2.3"
     },
     "devDependencies": {
-        "@remvst/game-model": "^4.20.0",
+        "@remvst/game-model": "^4.20.1",
         "@types/howler": "^2.2.7",
         "prettier": "3.2.5",
         "prettier-plugin-organize-imports": "^3.2.4",
