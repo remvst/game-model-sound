@@ -15,8 +15,10 @@ export class SimpleSoundEffectController<
 > extends SoundEffectController<EventType> {
     private howlsAndSprites: HowlAndSprite[] = [];
 
-    private howlId: number;
-    private howl: Howl;
+    protected howlId: number;
+    protected howl: Howl;
+
+    private playing = false;
 
     private volume = 1;
     private masterVolume = 1;
@@ -68,6 +70,8 @@ export class SimpleSoundEffectController<
         this.howl.rate(this.rate);
 
         this.howlId = this.howl.play(sprite || undefined);
+
+        this.playing = true;
 
         this.howl.once("end", () => this.onHowlEnd(), this.howlId);
 
@@ -139,7 +143,13 @@ export class SimpleSoundEffectController<
 
     tearDown(): void {
         super.tearDown();
-        this.howl?.stop(this.howlId);
+
+        if (this.howl && this.howlId) {
+            this.howl?.stop(this.howlId);
+        }
+
+        this.howl = null;
+        this.howlId = null;
     }
 
     protected onHowlEnd() {
@@ -147,10 +157,14 @@ export class SimpleSoundEffectController<
     }
 
     pause(): void {
+        if (!this.playing) return;
+        this.playing = false;
         this.howl.pause(this.howlId);
     }
 
     resume(): void {
+        if (this.playing) return;
+        this.playing = true;
         this.howl.play(this.howlId);
     }
 }
