@@ -15,8 +15,6 @@ export class WorldSoundController {
         SoundEffectController<any>
     >();
 
-    private started = false;
-
     age: number = 0;
 
     volume: number = 1;
@@ -50,11 +48,7 @@ export class WorldSoundController {
     }
 
     start() {
-        if (this.started) return;
-
         this.stop();
-
-        this.started = true;
 
         this.subscriptions = [
             this.world.events.subscribe((event) => this.onEvent(event)),
@@ -62,20 +56,19 @@ export class WorldSoundController {
     }
 
     stop() {
-        this.started = false;
+        const controllers = this.soundEffectControllers.slice(0);
+        const subscriptions = this.subscriptions.slice(0);
 
-        for (const subscription of this.subscriptions) {
-            subscription.unsubscribe();
-        }
         this.subscriptions = [];
+        this.soundEffectControllers = [];
+        this.collapsableControllers.clear();
 
-        for (const controller of this.soundEffectControllers.slice(0)) {
+        for (const controller of controllers) {
             controller.tearDown();
         }
-        this.soundEffectControllers.splice(
-            0,
-            this.soundEffectControllers.length,
-        );
+        for (const subscription of subscriptions) {
+            subscription.unsubscribe();
+        }
     }
 
     update(elapsed: number) {
@@ -134,14 +127,14 @@ export class WorldSoundController {
     }
 
     pause() {
-        this.soundEffectControllers
-            .slice(0)
-            .forEach((controller) => controller.pause());
+        for (const controller of this.soundEffectControllers) {
+            controller.pause();
+        }
     }
 
     resume() {
-        this.soundEffectControllers
-            .slice(0)
-            .forEach((controller) => controller.resume());
+        for (const controller of this.soundEffectControllers) {
+            controller.resume();
+        }
     }
 }
