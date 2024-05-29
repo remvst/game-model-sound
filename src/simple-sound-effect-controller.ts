@@ -62,7 +62,10 @@ export class SimpleSoundEffectController<
     }
 
     postBind(): void {
-        const [howl, sprite] = this.howlsAndSprites[Math.floor(Math.random() * this.howlsAndSprites.length)];
+        const [howl, sprite] =
+            this.howlsAndSprites[
+                Math.floor(Math.random() * this.howlsAndSprites.length)
+            ];
 
         this.howl = howl;
         this.howl.volume(this.volume * this.masterVolume);
