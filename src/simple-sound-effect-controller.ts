@@ -1,8 +1,5 @@
-import {
-    SmoothTargetFollowingTrait,
-    WorldEvent,
-    pointDistance,
-} from "@remvst/game-model";
+import { SmoothTargetFollowingTrait, WorldEvent } from "@remvst/game-model";
+import { pointDistance } from "@remvst/geometry";
 import { Howl } from "howler";
 import { SoundEffectController } from "./sound-effect-controller";
 
