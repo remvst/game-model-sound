@@ -20,6 +20,8 @@ export class WorldSoundController {
     volume: number = 1;
     rate: number = 1;
 
+    private started = false;
+
     constructor(options: {
         world: World;
         soundEffectControllerFactory: SoundEffectControllerFactory;
@@ -48,7 +50,9 @@ export class WorldSoundController {
     }
 
     start() {
-        this.stop();
+        if (this.started) return;
+
+        this.started = true;
 
         this.subscriptions = [
             this.world.events.subscribe((event) => this.onEvent(event)),
@@ -56,6 +60,10 @@ export class WorldSoundController {
     }
 
     stop() {
+        if (!this.started) return;
+
+        this.started = false;
+
         const controllers = this.soundEffectControllers.slice(0);
         const subscriptions = this.subscriptions.slice(0);
 

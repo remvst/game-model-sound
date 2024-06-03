@@ -1,6 +1,6 @@
 {
     "name": "@remvst/game-model-sound",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "Sound system for @remvst/game-model",
     "main": "lib/index.js",
     "scripts": {
@@ -13,8 +13,7 @@
     "author": "Rémi Vansteelandt",
     "license": "UNLICENSED",
     "dependencies": {
-        "@remvst/optimization": "^1.0.1",
-        "rxjs": "^7.8.0"
+        "@remvst/optimization": "^1.0.1"
     },
     "peerDependencies": {
         "@remvst/game-model": "^4.22.2",
