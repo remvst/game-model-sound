@@ -1,12 +1,12 @@
 import { WorldEvent } from "@remvst/game-model";
 import {
     HowlOrHowlAndSprite,
-    SimpleSoundEffectController,
-} from "./simple-sound-effect-controller";
+    HowlSoundEffectController,
+} from "./howl-sound-effect-controller";
 
 export class ContinuousSoundEffectController<
     EventType extends WorldEvent,
-> extends SimpleSoundEffectController<EventType> {
+> extends HowlSoundEffectController<EventType> {
     constructor(
         howlsAndSprites: HowlOrHowlAndSprite[],
         refRelativeDistance: number = 1,
@@ -15,8 +15,8 @@ export class ContinuousSoundEffectController<
         super(howlsAndSprites, refRelativeDistance);
     }
 
-    postBind(): void {
-        super.postBind();
+    resume(): void {
+        super.resume();
         this.howl.loop(true, this.howlId);
     }
 

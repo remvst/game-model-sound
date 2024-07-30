@@ -1,9 +1,9 @@
 import {
     HowlOrHowlAndSprite,
-    SimpleSoundEffectController,
-} from "./simple-sound-effect-controller";
+    HowlSoundEffectController,
+} from "./howl-sound-effect-controller";
 
-export class AmbientSoundEffectController extends SimpleSoundEffectController<null> {
+export class AmbientSoundEffectController extends HowlSoundEffectController<null> {
     constructor(
         howlsAndSprites: HowlOrHowlAndSprite[],
         refRelativeDistance: number = 1,
@@ -12,8 +12,8 @@ export class AmbientSoundEffectController extends SimpleSoundEffectController<nu
         super(howlsAndSprites, refRelativeDistance);
     }
 
-    postBind(): void {
-        super.postBind();
+    resume(): void {
+        super.resume();
         this.howl.loop(true, this.howlId);
     }
 
