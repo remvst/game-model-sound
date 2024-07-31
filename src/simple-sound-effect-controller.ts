@@ -9,4 +9,8 @@ export class SimpleSoundEffectController<
         this.resume();
         this.updatePosition();
     }
+
+    protected onHowlEnd() {
+        this.removeCallback?.();
+    }
 }

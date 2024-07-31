@@ -15,8 +15,8 @@ export class ContinuousSoundEffectController<
         super(howlsAndSprites, refRelativeDistance);
     }
 
-    resume(): void {
-        super.resume();
+    protected onHowlStart(): void {
+        super.onHowlStart();
         this.howl.loop(true, this.howlId);
     }
 
@@ -26,9 +26,5 @@ export class ContinuousSoundEffectController<
         if (!this.keepPlaying()) {
             this.removeCallback?.();
         }
-    }
-
-    protected onHowlEnd(): void {
-        // no-op
     }
 }

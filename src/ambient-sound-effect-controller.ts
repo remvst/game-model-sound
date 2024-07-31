@@ -12,8 +12,8 @@ export class AmbientSoundEffectController extends HowlSoundEffectController<null
         super(howlsAndSprites, refRelativeDistance);
     }
 
-    resume(): void {
-        super.resume();
+    protected onHowlStart(): void {
+        super.onHowlStart();
         this.howl.loop(true, this.howlId);
     }
 
@@ -25,9 +25,5 @@ export class AmbientSoundEffectController extends HowlSoundEffectController<null
         } else {
             this.resume();
         }
-    }
-
-    protected onHowlEnd(): void {
-        // no-op
     }
 }

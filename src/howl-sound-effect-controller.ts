@@ -14,7 +14,7 @@ export class HowlSoundEffectController<
     protected howlId: number;
     protected howl: Howl;
 
-    private playing = false;
+    protected playing = false;
 
     private volume = 1;
     private masterVolume = 1;
@@ -97,9 +97,9 @@ export class HowlSoundEffectController<
         this.howlId = null;
     }
 
-    protected onHowlEnd() {
-        this.removeCallback?.();
-    }
+    protected onHowlStart() {}
+
+    protected onHowlEnd() {}
 
     pause(): void {
         if (!this.playing) return;
@@ -124,6 +124,8 @@ export class HowlSoundEffectController<
 
             this.howlId = this.howl.play(sprite || undefined);
             this.howl.once("end", () => this.onHowlEnd(), this.howlId);
+
+            this.onHowlStart();
         } else {
             this.howl.play(this.howlId);
         }
