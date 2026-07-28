@@ -62,7 +62,12 @@ export class HowlSoundEffectController<
         if (!this.position) return;
 
         const halfDiagonal =
-            pointDistance(0, 0, this.camera.props.width, this.camera.props.height) / 2;
+            pointDistance(
+                0,
+                0,
+                this.camera.props.width,
+                this.camera.props.height,
+            ) / 2;
 
         const { target } = this.camera.entity!.traitOfType(
             SmoothTargetFollowingTrait,
